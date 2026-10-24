@@ -40,6 +40,7 @@ angular
         };
 
         var _includeIgn   = true;
+        var _includeCraig = false;
         var _geoLayers    = [];   // fonds de plan GEO choisis dans le Générateur
         var _leftDefault  = '';
         var _rightDefault = '';
@@ -80,6 +81,64 @@ angular
             return list;
         }
 
+        // Orthophotographies du CRAIG et de ses partenaires (WMTS public, tuiles PNG/JPEG, CORS ouvert).
+        // Liste lue dans le GetCapabilities de https://tiles.craig.fr/ortho/service (24/10/2026), codée
+        // en dur comme celle de l'IGN : les titres indiquent les départements couverts. Un nouveau
+        // millésime publié par le CRAIG demande donc une mise à jour du module.
+        var _CRAIG_WMTS = 'https://tiles.craig.fr/ortho/service';
+        var _CRAIG_LAYERS = [
+            ['ortho_2025', 'Ortho 2025 (03, 15, 42, 43, 63, 74) IGN'],
+            ['ortho_2024', 'Ortho 2024 (01, 38, 73) IGN'],
+            ['ortho_2023', 'Ortho 2023 (07, 26, 69, 74) IGN'],
+            ['ortho_2022', 'Ortho 2022 (03, 15, 42, 43, 63, 73) IGN'],
+            ['ortho_2021', 'Ortho 2021 (01, 38) IGN'],
+            ['ortho_2020', 'Ortho 2020 (07, 15, 26, 69, 74) CRAIG/IGN'],
+            ['ortho_2019', 'Ortho 2019 (03, 42, 43, 63, 73) CRAIG/IGN'],
+            ['ortho_2018', 'Ortho 2018 (01, 38) CRAIG/IGN'],
+            ['ortho_2017', 'Ortho 2017 (07, 69) IGN'],
+            ['ortho_2016', 'Ortho 2016 (03, 15, 26, 42, 43, 63, 73) CRAIG/IGN'],
+            ['ortho_2015', 'Ortho 2015 (01, 38, 74) IGN'],
+            ['ortho_2014', 'Ortho 2014 (07, 69) IGN'],
+            ['ortho_2013', 'Ortho 2013 (03, 15, 26, 42, 43, 63, 73) CRAIG/IGN'],
+            ['ortho_2012', 'Ortho 2012 (01, 38, 74) IGN'],
+            ['ortho_2011', 'Ortho 2011 (07) IGN'],
+            ['ortho_2010', 'Ortho 2010 (15, 26, 42, 43) CRAIG/IGN'],
+            ['ortho_2009', 'Ortho 2009 (01, 03, 38, 63, 73) CRAIG/IGN'],
+            ['ortho_2008', 'Ortho 2008 (03, 69, 74) IGN'],
+            ['ortho_2007', 'Ortho 2007 (07) IGN'],
+            ['ortho_2006', 'Ortho 2006 (26, 42, 73) IGN'],
+            ['ortho_2005', 'Ortho 2005 (01, 15, 43) IGN'],
+            ['ortho_2004', 'Ortho 2004 (63, 74) IGN'],
+            ['ortho_2003', 'Ortho 2003 (38, 69) IGN'],
+            ['ortho_2002', 'Ortho 2002 (03, 07) IGN'],
+            ['ortho_2001', 'Ortho 2001 (26, 42, 73) IGN'],
+            ['ortho_2000', 'Ortho 2000 (01, 15, 43, 74) IGN'],
+            ['ortho_1999', 'Ortho 1999 (63, 69) IGN'],
+            ['ortho_1998', 'Ortho 1998 (38) IGN'],
+            ['ortho_1993', 'Ortho 1993 (38) IGN/CD38'],
+            ['ortho_histo', 'Ortho Historique 1948-1954 IGN'],
+            ['lidarverne_2011', 'Site du Puy de Dôme 10cm Mars 2011'],
+            ['clermontco_2007', 'Clermont Communauté 16cm 2007'],
+            ['clermontco_2001', 'Clermont Communauté 16cm 2001'],
+            ['clermontco_1996', 'Clermont Communauté 25cm 1996'],
+            ['scot_rr_2020', 'SCOT Rives du Rhône 20cm 2020'],
+            ['scot_rr_2015', 'SCOT Rives du Rhône 20cm 2015'],
+            ['scot_rr_2009', 'SCOT Rives du Rhône 25cm 2009'],
+            ['vichy_2021', 'Vichy 3cm 2021'],
+            ['lyon_2022', 'Grand Lyon 5cm hiver 2022'],
+            ['grand_lyon_2023', 'Grand Lyon 5 cm été 2023'],
+            ['veneon_juin_2024', 'Vallée du Vénéon 10 cm juin 2024 (DDT 38)'],
+            ['veneon_octobre_2024', 'Vallée du Vénéon 10 cm octobre 2024 (DDT 38)']
+        ];
+
+        function _craigCatalogue() {
+            return _CRAIG_LAYERS.map(function (l) {
+                return { id: 'craig_' + l[0], label: l[1], group: 'CRAIG', type: 'wmts', url: _CRAIG_WMTS,
+                         layer: l[0], format: 'image/png', matrixSet: 'webmercator', style: 'default',
+                         minZoom: 0, maxZoom: 21, padMatrixIds: true };
+            });
+        }
+
         // Fonds de plan GEO (Données → Fonds de plan) glissés dans le Générateur.
         // Seul l'identifiant est retenu ici : le descripteur (`geoApplication._baseLayers`) n'est
         // peuplé qu'après l'initialisation complète de l'application, il est lu à l'usage.
@@ -96,6 +155,7 @@ angular
         function _buildCatalogue() {
             var list = _geoLayers.slice();
             if (_includeIgn) { list = list.concat(_ignCatalogue()); }
+            if (_includeCraig) { list = list.concat(_craigCatalogue()); }
             _catalogue = list;
         }
 
@@ -120,11 +180,11 @@ angular
         // Grille WMTS « PM » (Web Mercator, EPSG:3857) de la Géoplateforme IGN, codée en dur
         // plutôt que lue dans le GetCapabilities (plusieurs Mo). OpenLayers reprojette les
         // tuiles si la carte GEO est en Lambert 93.
-        function _pmTileGrid(minZ, maxZ) {
+        function _pmTileGrid(minZ, maxZ, padIds) {
             var size = 40075016.68557849 / 256, resolutions = [], matrixIds = [];
             for (var z = minZ || 0; z <= (maxZ || 21); z++) {
                 resolutions.push(size / Math.pow(2, z));
-                matrixIds.push(String(z));
+                matrixIds.push(padIds && z < 10 ? '0' + z : String(z));
             }
             return new ol.tilegrid.WMTS({
                 origin: [-20037508.342789244, 20037508.342789244],
@@ -239,7 +299,7 @@ angular
                 format: bm.format || 'image/png',
                 style: bm.style || 'normal',
                 projection: 'EPSG:3857',
-                tileGrid: _pmTileGrid(bm.minZoom, bm.maxZoom)
+                tileGrid: _pmTileGrid(bm.minZoom, bm.maxZoom, bm.padMatrixIds)
             }));
         }
 
@@ -421,6 +481,7 @@ angular
                 var props = config[0].properties;
 
                 _includeIgn   = props.includeIgnCatalog !== false && props.includeIgnCatalog !== 'false';
+                _includeCraig = props.includeCraigCatalog === true || props.includeCraigCatalog === 'true';
                 _geoLayers    = (props.baseLayers || []).map(_normalizeGeoLayer);
                 _leftDefault  = (props.leftDefault  || '').trim();
                 _rightDefault = (props.rightDefault || '').trim();

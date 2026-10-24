@@ -11,6 +11,15 @@ la plus récente publiée doit être celle de `package.json` et de `src/plugin.g
 
 ## [Non publié]
 
+## [0.3.0] — 2026-10-24
+
+### Ajouté
+
+- Catalogue CRAIG : nouvelle option « Inclure le catalogue CRAIG » qui ajoute aux menus les orthophotographies du
+  CRAIG et de ses partenaires en Auvergne-Rhône-Alpes (millésimes de 1993 à 2025, ortho historique 1948-1954 et
+  prises de vues locales à haute résolution). Le titre de chaque couche indique les départements couverts. Option
+  désactivée par défaut
+
 ## [0.2.0] — 2026-10-24
 
 Première version publiée du module : comparer deux rasters directement sur la carte principale de l'application.

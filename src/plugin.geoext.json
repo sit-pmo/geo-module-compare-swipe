@@ -1,7 +1,7 @@
 {
   "name": "geo.compare.swipe",
   "displayName": "Comparateur de rasters (rideau / loupe)",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "minGeoVersion": "3.2.0",
   "author": "fallamanche@vienne-condrieu-agglomeration.fr",
   "allowMultiple": false,
@@ -35,9 +35,18 @@
           "defaultValue": true
         },
         {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Inclure le catalogue CRAIG",
+          "description": "Ajoute aux menus les orthophotographies du CRAIG et de ses partenaires (Auvergne-Rhône-Alpes, de 1993 à 2025, y compris des prises de vues locales à haute résolution et l'ortho historique 1948-1954), après le catalogue IGN.",
+          "key": "includeCraigCatalog",
+          "required": false,
+          "type": "BOOLEAN",
+          "defaultValue": false
+        },
+        {
           "@type": "com.bg.functionality.canvas.configuration.FunctionalityConfigurationElement",
           "name": "Fonds de plan GEO à comparer",
-          "description": "Glissez ici des fonds de plan déjà paramétrés dans GEO (Données → Fonds de plan). Ils apparaissent dans les menus gauche et droite, avant le catalogue IGN.",
+          "description": "Glissez ici des fonds de plan déjà paramétrés dans GEO (Données → Fonds de plan). Ils apparaissent dans les menus gauche et droite, avant les catalogues IGN et CRAIG.",
           "key": "baseLayers",
           "required": false,
           "allowedTypes": [
@@ -51,7 +60,7 @@
         {
           "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
           "name": "Raster initial à gauche",
-          "description": "Libellé (ou identifiant du catalogue IGN) du raster affiché à gauche à l'ouverture. Par défaut : le 1er fond de plan GEO choisi, sinon l'ortho IGN 1950-1965.",
+          "description": "Libellé (ou identifiant d'un catalogue) du raster affiché à gauche à l'ouverture. Par défaut : le 1er fond de plan GEO choisi, sinon l'ortho IGN 1950-1965.",
           "key": "leftDefault",
           "required": false,
           "type": "STRING",
@@ -60,7 +69,7 @@
         {
           "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
           "name": "Raster initial à droite",
-          "description": "Libellé (ou identifiant du catalogue IGN) du raster affiché à droite à l'ouverture. Par défaut : le 2e fond de plan GEO choisi, sinon l'ortho IGN la plus récente.",
+          "description": "Libellé (ou identifiant d'un catalogue) du raster affiché à droite à l'ouverture. Par défaut : le 2e fond de plan GEO choisi, sinon l'ortho IGN la plus récente.",
           "key": "rightDefault",
           "required": false,
           "type": "STRING",
