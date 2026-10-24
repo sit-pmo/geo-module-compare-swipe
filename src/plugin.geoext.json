@@ -1,0 +1,162 @@
+{
+  "name": "geo.compare.swipe",
+  "displayName": "Comparateur de rasters (rideau / loupe)",
+  "version": "0.2.0",
+  "minGeoVersion": "3.2.0",
+  "author": "fallamanche@vienne-condrieu-agglomeration.fr",
+  "allowMultiple": false,
+  "reuseConfiguration": true,
+  "preview": "src/preview.png",
+  "compatibleZoneTags": [
+    "global.pro",
+    "leftpanel",
+    "widget.side.pro",
+    "widget.side"
+  ],
+  "code": {
+    "moduleName": "geo.compare.swipe",
+    "dependencies": [
+      "bg.acf.base",
+      "bg.common.geo.GeoApi"
+    ]
+  },
+  "configuration": [
+    {
+      "@type": "com.bg.functionality.canvas.configuration.ConfigurationGroup",
+      "name": "Rasters à comparer",
+      "elements": [
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Inclure le catalogue IGN",
+          "description": "Ajoute aux menus les orthophotos de la Géoplateforme IGN (dernière édition, 2003 à 2021, historiques 1950-1980), après les fonds de plan GEO.",
+          "key": "includeIgnCatalog",
+          "required": false,
+          "type": "BOOLEAN",
+          "defaultValue": true
+        },
+        {
+          "@type": "com.bg.functionality.canvas.configuration.FunctionalityConfigurationElement",
+          "name": "Fonds de plan GEO à comparer",
+          "description": "Glissez ici des fonds de plan déjà paramétrés dans GEO (Données → Fonds de plan). Ils apparaissent dans les menus gauche et droite, avant le catalogue IGN.",
+          "key": "baseLayers",
+          "required": false,
+          "allowedTypes": [
+            "BASELAYER"
+          ],
+          "withIcons": false,
+          "withSymbols": false,
+          "min": 0,
+          "max": 30
+        },
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Raster initial à gauche",
+          "description": "Libellé (ou identifiant du catalogue IGN) du raster affiché à gauche à l'ouverture. Par défaut : le 1er fond de plan GEO choisi, sinon l'ortho IGN 1950-1965.",
+          "key": "leftDefault",
+          "required": false,
+          "type": "STRING",
+          "defaultValue": ""
+        },
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Raster initial à droite",
+          "description": "Libellé (ou identifiant du catalogue IGN) du raster affiché à droite à l'ouverture. Par défaut : le 2e fond de plan GEO choisi, sinon l'ortho IGN la plus récente.",
+          "key": "rightDefault",
+          "required": false,
+          "type": "STRING",
+          "defaultValue": ""
+        }
+      ]
+    },
+    {
+      "@type": "com.bg.functionality.canvas.configuration.ConfigurationGroup",
+      "name": "Affichage",
+      "elements": [
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Emplacement des menus gauche / droite",
+          "description": "« Sur la carte » : bouton dans la barre d'outils de la carte et menus affichés en bas de la carte pendant la comparaison. « Panneau latéral » : onglet dans la barre latérale contenant les menus (nécessite un gabarit avec panneau latéral).",
+          "key": "menuPlacement",
+          "required": false,
+          "type": "ENUMERATED",
+          "values": [
+            "Sur la carte",
+            "Panneau latéral"
+          ],
+          "labels": [
+            "Sur la carte",
+            "Panneau latéral"
+          ],
+          "defaultValue": "Sur la carte"
+        },
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Mode initial",
+          "description": "Outil de comparaison utilisé au lancement : rideau (curseur déplaçable) ou loupe (le raster de droite n'apparaît que dans un cercle qui suit la souris).",
+          "key": "defaultMode",
+          "required": false,
+          "type": "ENUMERATED",
+          "values": [
+            "Rideau (curseur)",
+            "Loupe"
+          ],
+          "labels": [
+            "Rideau (curseur)",
+            "Loupe"
+          ],
+          "defaultValue": "Rideau (curseur)"
+        },
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Rayon de la loupe (pixels)",
+          "description": "Rayon du cercle de la loupe.",
+          "key": "loupeRadius",
+          "required": false,
+          "type": "NUMBER",
+          "minValue": 50,
+          "maxValue": 400,
+          "step": 10,
+          "defaultValue": 150
+        },
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Libellé du bouton / de l'onglet",
+          "description": "Libellé affiché au survol du bouton de la carte ou de l'onglet latéral.",
+          "key": "toolName",
+          "required": false,
+          "type": "STRING",
+          "defaultValue": "Comparer des rasters"
+        },
+        {
+          "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
+          "name": "Position du bouton sur la carte",
+          "description": "Position du bouton dans la barre d'outils de la carte (emplacement « Sur la carte » uniquement).",
+          "key": "toolPosition",
+          "required": false,
+          "type": "ENUMERATED",
+          "values": [
+            "Haut gauche",
+            "Haut centre",
+            "Haut droite",
+            "Milieu gauche",
+            "Milieu droite",
+            "Bas gauche",
+            "Bas centre",
+            "Bas droite"
+          ],
+          "labels": [
+            "Haut gauche",
+            "Haut centre",
+            "Haut droite",
+            "Milieu gauche",
+            "Milieu droite",
+            "Bas gauche",
+            "Bas centre",
+            "Bas droite"
+          ],
+          "defaultValue": "Haut droite"
+        }
+      ]
+    }
+  ]
+}
