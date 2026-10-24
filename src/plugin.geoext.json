@@ -1,7 +1,7 @@
 {
   "name": "geo.compare.swipe",
   "displayName": "Comparateur de rasters (rideau / loupe)",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "minGeoVersion": "3.2.0",
   "author": "fallamanche@vienne-condrieu-agglomeration.fr",
   "allowMultiple": false,
@@ -37,7 +37,7 @@
         {
           "@type": "com.bg.functionality.canvas.configuration.PropertyConfigurationElement",
           "name": "Inclure le catalogue CRAIG",
-          "description": "Ajoute aux menus les orthophotographies du CRAIG et de ses partenaires (Auvergne-Rhône-Alpes, de 1993 à 2025, y compris des prises de vues locales à haute résolution et l'ortho historique 1948-1954), après le catalogue IGN.",
+          "description": "Ajoute aux menus les orthophotographies du CRAIG et de ses partenaires (Auvergne-Rhône-Alpes : millésimes successifs, ortho historique, prises de vues locales à haute résolution), après le catalogue IGN. La liste est lue auprès du CRAIG à l'ouverture du comparateur : les nouveaux millésimes apparaissent sans mettre le module à jour.",
           "key": "includeCraigCatalog",
           "required": false,
           "type": "BOOLEAN",

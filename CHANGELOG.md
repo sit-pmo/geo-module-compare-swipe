@@ -11,6 +11,15 @@ la plus récente publiée doit être celle de `package.json` et de `src/plugin.g
 
 ## [Non publié]
 
+## [0.3.1] — 2026-10-24
+
+### Modifié
+
+- Catalogue CRAIG : la liste des couches est désormais lue directement auprès du CRAIG à l'ouverture du
+  comparateur, au lieu d'être figée dans le module. Les nouveaux millésimes et les nouvelles prises de vues
+  apparaissent sans mise à jour du module, et leurs titres sont toujours à jour. Si le service du CRAIG ne répond
+  pas, un message l'indique et les autres rasters restent disponibles
+
 ## [0.3.0] — 2026-10-24
 
 ### Ajouté

@@ -16,7 +16,7 @@ licence Beerware, puis Pierre C du CD 07), réécrit sous forme de module.
 |---|---|
 | Fonds de plan GEO à comparer | Glisser-déposer des fonds de plan déjà paramétrés dans GEO (Données → Fonds de plan) |
 | Inclure le catalogue IGN | Orthos Géoplateforme : dernière édition, 2003 à 2021, historiques 1950-1980 (après les fonds GEO) |
-| Inclure le catalogue CRAIG | Orthos du CRAIG et de ses partenaires (Auvergne-Rhône-Alpes, 40 couches de 1993 à 2025, dont l'ortho historique 1948-1954 et des prises de vues locales) ; désactivé par défaut |
+| Inclure le catalogue CRAIG | Orthos du CRAIG et de ses partenaires (Auvergne-Rhône-Alpes : millésimes successifs, ortho historique 1948-1954, prises de vues locales), **lues dans le GetCapabilities du CRAIG** à l'ouverture du comparateur ; désactivé par défaut |
 | Raster initial gauche / droite | Libellé (ou identifiant de catalogue) de départ de chaque côté ; par défaut les deux premiers fonds GEO choisis |
 | **Emplacement des menus** | **« Sur la carte »** : bouton dans la barre d'outils et menus en bas de la carte. **« Panneau latéral »** : onglet de la barre latérale contenant les menus |
 | Mode initial, rayon de la loupe | Rideau ou loupe au lancement ; rayon en pixels |
